@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EcommerceController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -12,6 +15,10 @@ Route::middleware('guest')->group(function(){
     Route::get('login', [AuthController::class, 'login'])->name('login');
     Route::get('register', [AuthController::class, 'register'])->name('register');
 });
+
+Route::get('profile', [ProfileController::class,'index'])->name('profile');
+Route::get('cart', [CartController::class,'index'])->name('cart');
+Route::get('checkout', [CheckoutController::class,'index'])->name('checkout');
 
 // Rute untuk menampilkan daftar produk
 Route::get('/produks', [EcommerceController::class, 'index'])->name('ecommerce.index');

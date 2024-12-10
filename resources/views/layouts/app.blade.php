@@ -21,7 +21,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('cart')}}">Cart</a> <!-- Tambahkan ini -->
                     </li>
                     @auth
                         <li class="nav-item dropdown">
@@ -30,10 +33,10 @@
                                 {{auth()->user()->name}}
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="">logout</a></li>
+                                <li><a class="dropdown-item" href="{{route('profile')}}">Profile</a></li>
+                                <li><a class="dropdown-item" href="">Logout</a></li>
                             </ul>
                         </li>
-
                     @endauth
                     @guest
                         <li class="nav-item">
@@ -50,7 +53,7 @@
                 </form>
             </div>
         </div>
-    </nav>
+    </nav>    
     <section>
         @yield('content')
     </section>
