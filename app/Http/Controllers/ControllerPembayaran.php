@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Midtrans\Midtrans;
 use Midtrans\Snap;
 use App\Models\Keranjang;
+use Illuminate\Support\Facades\Auth; // Tambahkan import Auth facade
 
 class PaymentController extends Controller
 {
@@ -22,7 +23,15 @@ class PaymentController extends Controller
     // Menampilkan halaman pembayaran
     public function checkout()
     {
-        $keranjangs = Keranjang::where('user_id', auth()->id())->get();
+        // Cek apakah user sudah login
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+        }
+
+        // Ambil ID user yang sedang login
+        $userId = Auth::id();
+
+        $keranjangs = Keranjang::where('user_id', $userId)->get();
         $totalAmount = $keranjangs->sum('total_harga');
 
         return view('payment.checkout', compact('keranjangs', 'totalAmount'));
@@ -31,7 +40,15 @@ class PaymentController extends Controller
     // Proses Pembayaran
     public function processPayment(Request $request)
     {
-        $keranjangs = Keranjang::where('user_id', auth()->id())->get();
+        // Cek apakah user sudah login
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu');
+        }
+
+        // Ambil ID user yang sedang login
+        $userId = Auth::id();
+
+        $keranjangs = Keranjang::where('user_id', $userId)->get();
         $totalAmount = $keranjangs->sum('total_harga');
 
         // Membuat transaksi
@@ -52,7 +69,7 @@ class PaymentController extends Controller
 
         // Detail transaksi
         $transactionData = [
-            'payment_type' => 'gopay',  // Ganti dengan metode pembayaran yang diinginkan
+            'payment_type' => 'gopay',
             'gopay' => [
                 'enabled' => true,
                 'callback_url' => route('payment.callback'),
@@ -70,10 +87,7 @@ class PaymentController extends Controller
     // Callback dari Midtrans
     public function callback(Request $request)
     {
-        // Proses pembayaran sukses atau gagal dari Midtrans
         $transactionStatus = $request->all();
-
-        // Simpan status transaksi dan lakukan proses seperti mengubah status pesanan, dll.
         return response()->json($transactionStatus);
     }
 }
