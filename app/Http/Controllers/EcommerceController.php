@@ -11,7 +11,7 @@ class EcommerceController extends Controller
     public function index()
     {
         $produks = Produk::all();
-        return view('ecommerce.index', compact('produks'));
+        return view('welcome', compact('produks'));
     }
 
     // Menampilkan formulir untuk membuat produk baru

@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EcommerceController;
 use App\Http\Controllers\ProfileController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [EcommerceController::class,'index'])->name('home');
 
 Route::middleware('guest')->group(function(){
     Route::get('login', [AuthController::class, 'login'])->name('login');
