@@ -28,7 +28,7 @@ class EcommerceController extends Controller
             'deskripsi' => 'required|string',
             'harga' => 'required|numeric',
             'stok' => 'required|integer',
-            
+
         ]);
 
         Produk::create($request->all());
@@ -59,6 +59,8 @@ class EcommerceController extends Controller
             'deskripsi' => 'required|string',
             'harga' => 'required|numeric',
             'stok' => 'required|integer',
+            'kategori' => 'required',
+            'gambar' => 'required|image|mimes:jpeg,jpg,png',
         ]);
 
         $produk = Produk::findOrFail($id);
