@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use illuminate\support\Facades\Auth;
-use illuminate\support\Facades\Hash;
-use illuminate\support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -38,13 +38,13 @@ class AuthController extends Controller
 
     public function registerPost(Request $request){
         $request->validate([
-            'username' => 'required',
+            'name' => 'required',
             'email' => 'request|email|unique:users',
             'password' => 'required|min:5|confirmed',
         ]);
 
         $user = User::create([
-            'username' => $request->username,
+            'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
