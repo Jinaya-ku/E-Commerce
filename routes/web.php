@@ -10,8 +10,19 @@ use App\Http\Controllers\ProfileController;
 Route::get('/', [EcommerceController::class,'index'])->name('home');
 
 Route::middleware('guest')->group(function(){
-    Route::get('login', [AuthController::class, 'login'])->name('login');
-    Route::get('register', [AuthController::class, 'register'])->name('register');
+// Rute untuk menampilkan Login
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+// Rute untuk menyimpan Login
+Route::post('/login', [AuthController::class, 'loginPost'])->name('login.post');
+// Rute untuk menampilkan register
+Route::get('/register', [AuthController::class, 'register'])->name('register');
+// Rute Untuk menyimpan register
+Route::post('/register', [AuthController::class, 'registerPost'])->name('register.post');
+});
+
+Route::middleware('auth')->group(function(){
+//Rute logout
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
 Route::get('profile', [ProfileController::class,'index'])->name('profile');

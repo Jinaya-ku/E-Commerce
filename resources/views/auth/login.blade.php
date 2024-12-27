@@ -11,7 +11,8 @@
 
 <body>
     <div class="mx-auto my-5 p-4" style="width: 400px;border-radius:10px;border: 1px solid gray;box-shadow:0 0 5px rgba(0,0,0,0.2)">
-        <form class="d-flex gap-2 flex-column">
+        <form class="d-flex gap-2 flex-column" action="{{ route('login.post')}}" method="POST">
+            @csrf
             <h1>Login</h1>
             <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
